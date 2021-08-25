@@ -1,15 +1,18 @@
-import { Controller, Get, Put } from '@nestjs/common';
+import { Controller, Get, Param, Put } from '@nestjs/common';
 
-@Controller('teachers')
+@Controller('teachers/:teacherId/students')
 export class StudentTeacherContoller {
-  @Get('/:teacherId/students')
-  getStudents() {
-    return 'all students associated with a teacher';
+  @Get()
+  getStudents(@Param('teacherId') teacherId: string) {
+    return `Get All students that belong to teacher with Id of ${teacherId}`;
   }
 
   // This decorator updates the server information.
   @Put('/:studentId')
-  updateStudentTeacher() {
-    return ' update student Teacher';
+  updateStudentTeacher(
+    @Param('teacherId') teacherId: string,
+    @Param('studentId') studentId: string,
+  ) {
+    return `Update student with Id of ${studentId} to Teacher with an Id of ${teacherId}`;
   }
 }
