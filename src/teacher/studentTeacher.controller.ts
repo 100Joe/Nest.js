@@ -1,4 +1,7 @@
+/* eslint-disable prettier/prettier */
+
 import { Controller, Get, Param, Put } from '@nestjs/common';
+import { StudentService } from '../student/student.service';
 import {
   FindStudentResponseDto,
   StudentResponseDto,
@@ -6,9 +9,12 @@ import {
 
 @Controller('teachers/:teacherId/students')
 export class StudentTeacherContoller {
+  // Constructor gives you access to services
+  constructor(private readonly studentService: StudentService) {}
+
   @Get()
   getStudents(@Param('teacherId') teacherId: string): FindStudentResponseDto[] {
-    return `Get All students that belong to teacher with Id of ${teacherId}`;
+    return this.studentService.getStudentsByTeacherId(teacherId);
   }
 
   // This decorator updates the server information.
@@ -18,6 +24,6 @@ export class StudentTeacherContoller {
     @Param('teacherId') teacherId: string,
     @Param('studentId') studentId: string,
   ): StudentResponseDto {
-    return `Update student with Id of ${studentId} to Teacher with an Id of ${teacherId}`;
+    return this.studentService.updateStudentTeacher(teacherId, studentId);
   }
 }
