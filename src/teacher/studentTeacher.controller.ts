@@ -9,7 +9,7 @@ import {
 
 @Controller('teachers/:teacherId/students')
 export class StudentTeacherContoller {
-  // Constructor gives you access to services
+  // Constructor gives you access to services needs to be implememted with {}
   constructor(private readonly studentService: StudentService) {}
 
   @Get()

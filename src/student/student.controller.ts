@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 ;
-import { Controller, Put, Get, Post, Param, Body } from '@nestjs/common';
+import { Controller, Put, Get, Post, Param, Body, ParseUUIDPipe } from '@nestjs/common';
 import {
   CreateStudentDto,
   FindStudentResponseDto,
@@ -23,25 +23,20 @@ export class StudentController {
   // Additional paths are added to the request decorator.
   @Get('/:studentId')
   getStudentById(
-    @Param('studentId') studentId: string,
+    @Param('studentId', new ParseUUIDPipe, studentId: string
   ): FindStudentResponseDto {
     return this.studentService.getStudentById(studentId);
   }
 
   @Post()
-  createStudent(
-    @Body() body: CreateStudentDto,
-    @Body('name') name: string,
-  ): FindStudentResponseDto {
+    @Body('name') @Body(name: string)
+  : FindStudentResponseDto {
     return this.studentService.createStudent(body);
   }
 
   // Additional paths are added to the request decorator.
   @Put('/:studentId')
-  updateStudent(
-    @Param('studentId') studentId: string,
-    @Body() body: UpdateStudentDto,
-  ): StudentResponseDto {
-    return this.studentService.updateStudent(body, studentId);
+    @Param('studentId') @Body(body: UpdateStudentDto
+  ): {
   }
 }
